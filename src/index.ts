@@ -1,13 +1,13 @@
-import { drizzle } from 'drizzle-orm/neon-http';
+import express from 'express';
+import matchRouter from './routes/match.route.ts';
 
-const DATABASE_URL = process.env.DATABASE_URL;
+const app = express();
 
-if (!DATABASE_URL) {
-  throw new Error('DATABASE_URL is not set');
-}
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const db = drizzle(DATABASE_URL);
+app.use('/api' , matchRouter);
 
-
-console.log(db);
-
+app.listen(3000, () => {
+    console.log('Server is running on http://localhost:3000');
+});
